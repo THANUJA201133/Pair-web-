@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>THANUJA-MD - Pair Code</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #00ffcc;
+    }
+    #pair-code, #qr {
+      margin: 20px;
+      padding: 20px;
+      border: 2px dashed #00ffcc;
+      border-radius: 10px;
+      background: #1e1e1e;
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 THANUJA-MD Bot Pair Code</h1>
+
+  <div id="qr">
+    <h2>Scan QR Code:</h2>
+    <img id="qr-image" src="/qr.png" alt="QR Code will appear here" width="250"/>
+  </div>
+
+  <div id="pair-code">
+    <h2>Or Use Pair Code:</h2>
+    <h3 id="code">waiting for code...</h3>
+  </div>
+
+  <footer>Powered by THANUJA</footer>
+
+  <script>
+    // This will keep updating QR / Pair code via websocket or polling (backend should update)
+    async function getCode() {
+      try {
+        const res = await fetch('/pair-code.txt');
+        const text = await res.text();
+        document.getElementById('code').innerText = text.trim();
+      } catch (e) {
+        document.getElementById('code').innerText = 'Unable to load code.';
+      }
+    }
+    setInterval(getCode, 3000);
+    getCode();
+  </script>
+</body>
+  </html>
